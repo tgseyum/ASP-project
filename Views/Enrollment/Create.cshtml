@@ -1,0 +1,28 @@
+
+@model myproject.Models.Enrollment
+
+<h2>Enroll Student in Course</h2>
+
+<form asp-controller="Enrollment" asp-action="Create" method="post">
+    @Html.AntiForgeryToken()
+
+    <div class="mb-3">
+        <label asp-for="StudentId" class="form-label">Student ID</label>
+        <input asp-for="StudentId" class="form-control" />
+        <span asp-validation-for="StudentId" class="text-danger"></span>
+    </div>
+
+    <div class="mb-3">
+        <label asp-for="CourseId" class="form-label">Course ID</label>
+        <input asp-for="CourseId" class="form-control" />
+        <span asp-validation-for="CourseId" class="text-danger"></span>
+    </div>
+
+    <button type="submit" class="btn btn-primary">Enroll Student</button>
+    <a asp-controller="Enrollment" asp-action="Index"
+       class="btn btn-secondary">Cancel</a>
+</form>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}
