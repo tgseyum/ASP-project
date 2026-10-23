@@ -13,11 +13,23 @@ namespace myproject.Controllers
         {
             _context = context;
         }
+        // NEW CODE: Add inside CourseController.
+
+        private bool IsDemoUserLoggedIn()
+        {
+            return !string.IsNullOrEmpty(
+                HttpContext.Session.GetString("DemoUser"));
+        }
 
         // Display the course form
         [HttpGet]
         public IActionResult Create()
         {
+            // NEW CODE: Check login before showing courses.
+            if (!IsDemoUserLoggedIn())
+            {
+                return RedirectToAction("Login", "Account");
+            }
             return View();
         }
 
@@ -26,6 +38,11 @@ namespace myproject.Controllers
         [ValidateAntiForgeryToken]
         public IActionResult Create(Course course)
         {
+            // NEW CODE: Check login before showing courses.
+            if (!IsDemoUserLoggedIn())
+            {
+                return RedirectToAction("Login", "Account");
+            }
             if (ModelState.IsValid)
             {
                 _context.Courses.Add(course);
@@ -40,6 +57,11 @@ namespace myproject.Controllers
         // Display all courses
         public IActionResult Index()
         {
+            // NEW CODE: Check login before showing courses.
+            if (!IsDemoUserLoggedIn())
+            {
+                return RedirectToAction("Login", "Account");
+            }
             var courses = _context.Courses
                 .AsNoTracking()
                 .ToList();

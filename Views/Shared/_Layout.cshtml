@@ -62,6 +62,7 @@
 
                     <ul class="navbar-nav flex-grow-1">
 
+
                         <li class="nav-item">
 
                             <a class="nav-link text-dark"
@@ -104,21 +105,41 @@
                             </a>
 
                         </li>
-<li class="nav-item">
-    <a class="nav-link text-dark" asp-controller="Enrollment" asp-action="Index">Enrolment</a>
-</li>
-
                         <li class="nav-item">
-
-                            <a class="nav-link text-dark"
-                               asp-area=""
-                               asp-controller="Home"
-                               asp-action="Privacy">
-                                Privacy
-                            </a>
-
+                            <a class="nav-link text-dark" asp-controller="Enrollment" asp-action="Index">Enrollment</a>
                         </li>
+                        @{
+    var demoUser =
+        Context.Session.GetString("DemoUser");
+}
+ <div class="ms-auto d-flex align-items-center">
+    @if (!string.IsNullOrEmpty(demoUser))
+    {
+        <span class="navbar-text me-2">
+            Hello, @demoUser
+        </span>
 
+        <form asp-controller="Account"
+              asp-action="Logout"
+              method="post"
+              class="d-inline">
+
+            <button type="submit"
+                    class="btn btn-outline-danger">
+                Logout
+            </button>
+        </form>
+    }
+    else
+    {
+        <a asp-controller="Account"
+           asp-action="Login"
+           class="btn btn-outline-primary">
+            Login
+        </a>
+    }
+</div>
+                        
                     </ul>
 
                 </div>

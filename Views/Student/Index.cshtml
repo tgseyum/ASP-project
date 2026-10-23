@@ -31,3 +31,25 @@
         }
     </tbody>
 </table>
+
+@{
+    var demoUser = Context.Session.GetString("DemoUser");
+}
+
+@if (!string.IsNullOrEmpty(demoUser))
+{
+    <div class="alert alert-success">
+        Hello, @demoUser. The demo session value is present.
+    </div>
+}
+else
+{
+    <div class="alert alert-info">
+        You are not signed in to the classroom demo.
+        <a asp-controller="Account"
+           asp-action="Login"
+           class="btn btn-primary btn-sm">
+            Login
+        </a>
+    </div>
+}
