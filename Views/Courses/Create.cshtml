@@ -1,0 +1,134 @@
+
+@model myproject.Models.Course
+
+@{
+    ViewData["Title"] = "Add New Course";
+}
+
+<style>
+    /* Style the entire page */
+    body {
+        font-family: Arial, sans-serif;
+        background-color: #f4f6f9;
+    }
+
+    /* Style the form container */
+    .course-form {
+        max-width: 600px;
+        margin: 40px auto;
+        padding: 30px;
+        background-color: white;
+        border: 1px solid #ddd;
+        border-radius: 10px;
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    }
+
+    /* Style the heading */
+    .course-form h2 {
+        text-align: center;
+        color: #003366;
+        margin-bottom: 25px;
+    }
+
+    /* Add spacing around each form field */
+    .form-group {
+        margin-bottom: 20px;
+    }
+
+    /* Style the labels */
+    .form-group label {
+        display: block;
+        margin-bottom: 8px;
+        font-weight: bold;
+        color: #333;
+    }
+
+    /* Style the input fields */
+    .form-group input {
+        width: 100%;
+        padding: 10px;
+        border: 1px solid #bbb;
+        border-radius: 5px;
+        box-sizing: border-box;
+        font-size: 16px;
+    }
+
+    /* Highlight an input when the user clicks it */
+    .form-group input:focus {
+        border-color: #0066cc;
+        outline: none;
+        box-shadow: 0 0 5px rgba(0, 102, 204, 0.3);
+    }
+
+    /* Style validation messages */
+    .field-validation-error {
+        color: #cc0000;
+        font-size: 14px;
+    }
+
+    /* Style the Save button */
+    .btn-save {
+        display: inline-block;
+        padding: 11px 20px;
+        background-color: #003366;
+        color: white;
+        border: none;
+        border-radius: 5px;
+        font-size: 16px;
+        cursor: pointer;
+        text-decoration: none;
+    }
+
+    .btn-save:hover {
+        background-color: #00509e;
+    }
+
+    /* Style the View Courses link as a button */
+    .btn-view {
+        display: inline-block;
+        padding: 11px 20px;
+        background-color: #e5e7eb;
+        color: #222;
+        border-radius: 5px;
+        text-decoration: none;
+        margin-left: 8px;
+    }
+
+    .btn-view:hover {
+        background-color: #d1d5db;
+    }
+</style>
+
+<div class="course-form">
+
+    <h2>Add New Course</h2>
+
+    <form asp-controller="Courses" asp-action="Create" method="post">
+
+        <div class="form-group">
+            <label asp-for="CourseCode">Course Code</label>
+            <input asp-for="CourseCode" placeholder="Enter course code" />
+            <span asp-validation-for="CourseCode"></span>
+        </div>
+
+        <div class="form-group">
+            <label asp-for="CourseName">Course Name</label>
+            <input asp-for="CourseName" placeholder="Enter course name" />
+            <span asp-validation-for="CourseName"></span>
+        </div>
+
+        <div class="form-group">
+            <label asp-for="Instructor">Instructor</label>
+            <input asp-for="Instructor" placeholder="Enter instructor name" />
+            <span asp-validation-for="Instructor"></span>
+        </div>
+
+        <button type="submit" class="btn-save">Save Course</button>
+
+        <a asp-controller="Courses" asp-action="Index" class="btn-view">
+            View Courses
+        </a>
+
+    </form>
+
+</div>

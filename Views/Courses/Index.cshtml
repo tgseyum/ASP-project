@@ -1,0 +1,115 @@
+@* @model IEnumerable<myproject.Models.Course>
+
+<h2>Course List</h2>
+
+<p>
+    <a asp-controller="Courses" asp-action="Create">Add New Course</a>
+</p>
+
+<table class="table table-bordered">
+    <thead>
+        <tr>
+            <th>Id</th>
+            <th>Course Code</th>
+            <th>Course Name</th>
+            <th>Instructor</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var course in Model)
+        {
+            <tr>
+                <td>@course.Id</td>
+                <td>@course.CourseCode</td>
+                <td>@course.CourseName</td>
+                <td>@course.Instructor</td>
+            </tr>
+        }
+    </tbody>
+</table> *@
+
+
+@model IEnumerable<myproject.Models.Course>
+
+@{
+    // Set the page title
+    ViewData["Title"] = "Course List";
+}
+
+<h2>Course List</h2>
+
+<!-- Link to the form for adding a new course -->
+<p>
+    <a asp-controller="Courses" asp-action="Create" class="btn btn-primary">
+        Add New Course
+    </a>
+</p>
+
+<!-- Display course information in an HTML table -->
+<!-- The id courseTable is used by JavaScript to initialize DataTables -->
+<table id="courseTable" class="table table-bordered table-striped">
+
+    <!-- Define the table column headings -->
+    <thead>
+        <tr>
+            <th>Id</th>
+            <th>Course Code</th>
+            <th>Course Name</th>
+            <th>Instructor</th>
+        </tr>
+    </thead>
+
+    <!-- Display course records retrieved from the controller -->
+    <tbody>
+        @foreach (var course in Model)
+        {
+            // Repeat one table row for each course
+            <tr>
+                <td>@course.Id</td>
+                <td>@course.CourseCode</td>
+                <td>@course.CourseName</td>
+                <td>@course.Instructor</td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+<!-- Load the DataTables CSS to style the table controls -->
+@section Styles {
+    <link rel="stylesheet"
+          href="https://cdn.datatables.net/2.3.4/css/dataTables.dataTables.min.css" />
+}
+
+@section Scripts {
+
+    <!-- Load jQuery because this example uses jQuery syntax -->
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+
+    <!-- Load the DataTables JavaScript library -->
+    <script src="https://cdn.datatables.net/2.3.4/js/dataTables.min.js"></script>
+
+    <script>
+        // Wait until the HTML document is fully loaded
+        $(document).ready(function () {
+
+            // Find the HTML table by its ID and activate DataTables
+            $('#courseTable').DataTable({
+
+                // Enable page navigation
+                paging: true,
+
+                // Enable the search box
+                searching: true,
+
+                // Allow sorting by clicking column headings
+                ordering: true,
+
+                // Display five course records per page by default
+                pageLength: 5,
+
+                // Allow users to select the number of records per page
+                lengthMenu: [5, 10, 25, 50]
+            });
+        });
+    </script>
+}
