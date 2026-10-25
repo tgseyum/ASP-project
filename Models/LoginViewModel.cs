@@ -20,6 +20,7 @@ namespace myproject.Models;
 public class LoginViewModel
 {
     [Required]
+    [StringLength(50)]
     public string Username { get; set; } = string.Empty;
 
     [Required]
@@ -27,4 +28,6 @@ public class LoginViewModel
     public string Password { get; set; } = string.Empty;
 
     public bool RememberMe { get; set; }
+
+    public string? ReturnUrl { get; set; }
 }

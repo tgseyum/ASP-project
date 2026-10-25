@@ -19,11 +19,9 @@ namespace myproject.Controllers
         }
 
 
-        // Check whether the demo user is logged in.
-        private bool IsDemoUserLoggedIn()
+        private bool IsUserLoggedIn()
         {
-            return !string.IsNullOrEmpty(
-                HttpContext.Session.GetString("DemoUser"));
+            return User.Identity?.IsAuthenticated == true;
         }
         // // GET: /Student/Index
         // public IActionResult Index()
@@ -39,11 +37,7 @@ namespace myproject.Controllers
         [HttpGet]
         public async Task<IActionResult> Index()
         {
-            // Step 1: Check the session for a demo username.
-            var demoUser = HttpContext.Session.GetString("DemoUser");
-
-            // Step 2: Redirect to Login if no session exists.
-            if (string.IsNullOrEmpty(demoUser))
+            if (!IsUserLoggedIn())
             {
                 return RedirectToAction("Login", "Account");
             }
@@ -61,7 +55,7 @@ namespace myproject.Controllers
         public IActionResult Create()
         {
             // Require login before displaying the Create form.
-            if (!IsDemoUserLoggedIn())
+            if (!IsUserLoggedIn())
             {
                 return RedirectToAction("Login", "Account");
             }
@@ -75,8 +69,7 @@ namespace myproject.Controllers
         public IActionResult Create(Student student)
         {
 
-            // NEW CODE: Check the session before processing submitted data.
-            if (!IsDemoUserLoggedIn())
+            if (!IsUserLoggedIn())
             {
                 return RedirectToAction("Login", "Account");
             }
@@ -99,8 +92,7 @@ namespace myproject.Controllers
         // GET: /Student/Edit/1
         public IActionResult Edit(int? id)
         {
-            // NEW CODE: Check the session before processing submitted data.
-            if (!IsDemoUserLoggedIn())
+            if (!IsUserLoggedIn())
             {
                 return RedirectToAction("Login", "Account");
             }
@@ -123,8 +115,7 @@ namespace myproject.Controllers
         [ValidateAntiForgeryToken]
         public IActionResult Edit(int id, Student student)
         {
-            // NEW CODE: Check the session before processing submitted data.
-            if (!IsDemoUserLoggedIn())
+            if (!IsUserLoggedIn())
             {
                 return RedirectToAction("Login", "Account");
             }
@@ -146,8 +137,7 @@ namespace myproject.Controllers
         // GET: /Student/Delete/1
         public IActionResult Delete(int? id)
         {
-            // NEW CODE: Check the session before processing submitted data.
-            if (!IsDemoUserLoggedIn())
+            if (!IsUserLoggedIn())
             {
                 return RedirectToAction("Login", "Account");
             }
@@ -170,8 +160,7 @@ namespace myproject.Controllers
         [ValidateAntiForgeryToken]
         public IActionResult DeleteConfirmed(int id)
         {
-            // NEW CODE: Check the session before processing submitted data.
-            if (!IsDemoUserLoggedIn())
+            if (!IsUserLoggedIn())
             {
                 return RedirectToAction("Login", "Account");
             }

@@ -14,22 +14,18 @@ namespace myproject.Controllers
         {
             _context = context;
         }
-// NEW CODE: Add inside EnrollmentController.
-
-private bool IsDemoUserLoggedIn()
-{
-    return !string.IsNullOrEmpty(
-        HttpContext.Session.GetString("DemoUser"));
-}
+        private bool IsUserLoggedIn()
+        {
+            return User.Identity?.IsAuthenticated == true;
+        }
         // Display all enrollment records
         public async Task<IActionResult> Index()
         {
 
-              // NEW CODE: Require a valid demo session.
-    if (!IsDemoUserLoggedIn())
-    {
-        return RedirectToAction("Login", "Account");
-    }
+            if (!IsUserLoggedIn())
+            {
+                return RedirectToAction("Login", "Account");
+            }
             var enrollments = await _context.Enrollments
                 .Include(e => e.Student)
                 .Include(e => e.Course)
@@ -42,11 +38,10 @@ private bool IsDemoUserLoggedIn()
         [HttpGet]
         public async Task<IActionResult> Create()
         {
-              // NEW CODE: Require a valid demo session.
-    if (!IsDemoUserLoggedIn())
-    {
-        return RedirectToAction("Login", "Account");
-    }
+            if (!IsUserLoggedIn())
+            {
+                return RedirectToAction("Login", "Account");
+            }
             await LoadDropdowns();
             return View(new Enrollment());
         }
@@ -56,11 +51,10 @@ private bool IsDemoUserLoggedIn()
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create(Enrollment enrollment)
         {
-              // NEW CODE: Require a valid demo session.
-    if (!IsDemoUserLoggedIn())
-    {
-        return RedirectToAction("Login", "Account");
-    }
+            if (!IsUserLoggedIn())
+            {
+                return RedirectToAction("Login", "Account");
+            }
             // Verify that the selected student exists
             bool studentExists = await _context.Students
                 .AnyAsync(s => s.Id == enrollment.StudentId);

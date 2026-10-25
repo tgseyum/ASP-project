@@ -13,20 +13,16 @@ namespace myproject.Controllers
         {
             _context = context;
         }
-        // NEW CODE: Add inside CourseController.
-
-        private bool IsDemoUserLoggedIn()
+        private bool IsUserLoggedIn()
         {
-            return !string.IsNullOrEmpty(
-                HttpContext.Session.GetString("DemoUser"));
+            return User.Identity?.IsAuthenticated == true;
         }
 
         // Display the course form
         [HttpGet]
         public IActionResult Create()
         {
-            // NEW CODE: Check login before showing courses.
-            if (!IsDemoUserLoggedIn())
+            if (!IsUserLoggedIn())
             {
                 return RedirectToAction("Login", "Account");
             }
@@ -38,8 +34,7 @@ namespace myproject.Controllers
         [ValidateAntiForgeryToken]
         public IActionResult Create(Course course)
         {
-            // NEW CODE: Check login before showing courses.
-            if (!IsDemoUserLoggedIn())
+            if (!IsUserLoggedIn())
             {
                 return RedirectToAction("Login", "Account");
             }
@@ -57,8 +52,7 @@ namespace myproject.Controllers
         // Display all courses
         public IActionResult Index()
         {
-            // NEW CODE: Check login before showing courses.
-            if (!IsDemoUserLoggedIn())
+            if (!IsUserLoggedIn())
             {
                 return RedirectToAction("Login", "Account");
             }

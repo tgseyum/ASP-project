@@ -108,15 +108,11 @@
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-controller="Enrollment" asp-action="Index">Enrollment</a>
                         </li>
-                        @{
-    var demoUser =
-        Context.Session.GetString("DemoUser");
-}
  <div class="ms-auto d-flex align-items-center">
-    @if (!string.IsNullOrEmpty(demoUser))
+    @if (User.Identity?.IsAuthenticated == true)
     {
         <span class="navbar-text me-2">
-            Hello, @demoUser
+            Hello, @User.Identity.Name
         </span>
 
         <form asp-controller="Account"
@@ -136,6 +132,11 @@
            asp-action="Login"
            class="btn btn-outline-primary">
             Login
+        </a>
+        <a asp-controller="Account"
+           asp-action="Register"
+           class="btn btn-link">
+            Register
         </a>
     }
 </div>
@@ -183,4 +184,3 @@
 </body>
 
 </html>
-

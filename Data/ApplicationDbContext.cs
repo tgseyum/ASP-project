@@ -18,5 +18,19 @@ namespace myproject.Data
         public DbSet<Student> Students { get; set; }
          public DbSet<Course> Courses { get; set; }
          public DbSet<Enrollment> Enrollments { get; set; }
+        public DbSet<LoginAccount> Logins { get; set; }
+
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            base.OnModelCreating(modelBuilder);
+
+            modelBuilder.Entity<LoginAccount>()
+                .HasIndex(account => account.NormalizedUsername)
+                .IsUnique();
+
+            modelBuilder.Entity<LoginAccount>()
+                .HasIndex(account => account.NormalizedEmail)
+                .IsUnique();
+        }
     }
 }

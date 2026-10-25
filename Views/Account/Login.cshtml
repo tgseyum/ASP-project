@@ -1,4 +1,4 @@
-@model YourProject.Models.LoginViewModel
+@model myproject.Models.LoginViewModel
 
 @{
     ViewData["Title"] = "Login";
@@ -9,6 +9,7 @@
 <form asp-controller="Account"
       asp-action="Login"
       method="post">
+    <input asp-for="ReturnUrl" type="hidden" />
 
     <div asp-validation-summary="ModelOnly"
          class="text-danger">
@@ -42,10 +43,18 @@
         </span>
     </div>
 
+    <div class="form-check mb-3">
+        <input asp-for="RememberMe" class="form-check-input" />
+        <label asp-for="RememberMe" class="form-check-label">Remember me</label>
+    </div>
+
     <button type="submit"
             class="btn btn-primary">
         Login
     </button>
+    <a asp-controller="Account" asp-action="Register" class="btn btn-link">
+        Create an account
+    </a>
 
 </form>
 

@@ -1,29 +1,23 @@
  using Microsoft.EntityFrameworkCore;
-using myproject.Data;
+ using Microsoft.AspNetCore.Identity;
+ using myproject.Data;
+ using myproject.Models;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add MVC services
 builder.Services.AddControllersWithViews();
 
-//==============================================
-// Register an in-memory cache required by session state.
-builder.Services.AddDistributedMemoryCache();
-
-// Register session services and configure session options.
-builder.Services.AddSession(options =>
+builder.Services.AddAuthentication("ApplicationCookie")
+    .AddCookie("ApplicationCookie", options =>
 {
-    // Set the session idle timeout to 20 minutes.
-    options.IdleTimeout = TimeSpan.FromMinutes(20);
-
-    // Prevent client-side JavaScript from accessing the session cookie.
+    options.LoginPath = "/Account/Login";
     options.Cookie.HttpOnly = true;
-
-    // Allow the session cookie to be stored when consent is required.
     options.Cookie.IsEssential = true;
 });
-//================================================
-// Configure Entity Framework Core to use SQLite
+
+builder.Services.AddScoped<IPasswordHasher<LoginAccount>, PasswordHasher<LoginAccount>>();
+
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
     options.UseSqlite("Data Source=student.db"));
 
@@ -39,9 +33,7 @@ app.UseHttpsRedirection();
 
 app.UseRouting();
 
-// Enable session state before controller actions access it.
-app.UseSession();
-
+app.UseAuthentication();
 app.UseAuthorization();
 
 
@@ -52,5 +44,4 @@ app.MapControllerRoute(
 
 
 app.Run();
-
 
