@@ -6,6 +6,7 @@ namespace myproject.Data
     // ApplicationDbContext represents our connection to the database
     public class ApplicationDbContext : DbContext
     {
+        
         // Constructor receives database configuration from Program.cs
         public ApplicationDbContext(
             DbContextOptions<ApplicationDbContext> options)
