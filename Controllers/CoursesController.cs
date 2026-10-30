@@ -43,6 +43,7 @@ namespace myproject.Controllers
             {
                 return RedirectToAction("Login", "Account");
             }
+            
             if (ModelState.IsValid)
             {
                 _context.Courses.Add(course);
