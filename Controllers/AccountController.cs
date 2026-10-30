@@ -1,7 +1,7 @@
 using Microsoft.AspNetCore.Mvc;
-using YourProject.Models;
+using myproject.Models;
 
-namespace YourProject.Controllers;
+namespace myproject.Controllers;
 
 public class AccountController : Controller
 {
@@ -24,6 +24,7 @@ public class AccountController : Controller
 
         // CLASSROOM DEMO ONLY.
         // Never hard-code credentials in a real application.
+        
         bool validDemoCredentials =
             model.Username == "student" &&
             model.Password == "Demo123!";
